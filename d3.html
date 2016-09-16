@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script src="d3.js" charset="utf-8"></script>
+<div id="viz"></div>
+<script>
+
+    d3.edge = {};
+
+    d3.edge.donut = function module() {
+
+        var width = 460,
+                height = 300,
+                radius = Math.min(width, height) / 2;
+
+        var color = d3.scale.category20();
+
+
+        var dispatch = d3.dispatch("customHover");
+        function graph(_selection) {
+            _selection.each(function(_data) {
+                var pie = d3.layout.pie()
+                        .sort(null);
+
+                var arc = d3.svg.arc()
+                        .innerRadius(radius - 100)
+                        .outerRadius(radius - 50);
+
+                var svg = d3.select(this).select("svg > g");
+                if (svg.empty()){
+                    var svg = d3.select(this).append("svg")
+                            .attr("width", width)
+                            .attr("height", height)
+                            .append("g")
+                            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+                }
+                var path = svg.selectAll("path")
+                        .data(pie);
+                path
+                        .enter().append("path")
+                        .attr("fill", function(d, i) { return color(i); })
+                        .attr("d", arc)
+                        .each(function(d) {this._current = d;} );
+
+                path.transition()
+                        .ease("elastic")
+                        .duration(750)
+                        .attrTween("d", arcTween);
+
+                path.exit().remove();
+
+                function arcTween(a) {
+                    var i = d3.interpolate(this._current, a);
+                    this._current = i(0);
+                    return function(t) {
+                        return arc(i(t));
+                    };
+                }
+            });
+
+        }
+        d3.rebind(graph, dispatch, "on");
+        return graph;
+    }
+
+    donut = d3.edge.donut();
+    var data = [1, 2, 3, 4];
+    var container = d3.select("#viz").datum(data).call(donut);
+
+    function update(_data) {
+        console.log("time")
+        data = d3.range(~~(Math.random() * 20)).map(function(d, i) {
+            return ~~(Math.random() * 100);
+        });
+        container.datum(data).transition().ease("linear").call(donut);
+    }
+
+    update();
+    setInterval( update, 1000);
+</script>
+
+</body>
+</html>
