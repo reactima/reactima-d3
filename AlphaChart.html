@@ -39,10 +39,10 @@
   <g class="container"></g>
 </svg>
 <script src="d3.v4.js"></script>
-<script src="controller-alpha.js"></script>
+<script src="alpha.js"></script>
 <script>
   var chartData;
-  d3.json('data/data.json', function (data) {
+  d3.json('data-alpha.json', function (data) {
     chartData = data;
     buildChart(data);
   });
