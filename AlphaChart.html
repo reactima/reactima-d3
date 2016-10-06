@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+  svg text {
+    font-family: sans-serif;
+    font-size: 11px;
+  }
+
+  .x-axis path,
+  .x-axis line,
+  .z-line line,
+  .y-axis path {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .scatter-wrap .x-axis .tick,
+  .scatter-wrap .y-axis .tick {
+    opacity: 0 !important;
+  }
+
+  .scatter-points .point {
+    transition: stroke-width 0.2s;
+  }
+
+  .line-wrap text {
+    font-size: 12px;
+  }
+
+  .text-wrap text {
+    font-size: 16px;
+  }
+
+
+</style>
+<svg id="chart-container">
+  <g class="container"></g>
+</svg>
+<script src="d3.v4.js"></script>
+<script src="controller-alpha.js"></script>
+<script>
+  var chartData;
+  d3.json('data/data.json', function (data) {
+    chartData = data;
+    buildChart(data);
+  });
+</script>
