@@ -1,5 +1,3 @@
-
-Using d3-tip to add tooltips to a d3 bar chart.
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
@@ -190,12 +188,12 @@ var yAxis = d3.svg.axis()
     .orient("left")
     .tickFormat(formatPercent);
 
-//var tip = d3.tip()
-//  .attr('class', 'd3-tip')
-//  .offset([-10, 0])
-//  .html(function(d) {
-//    return "<strong>Frequency:</strong> <span style='color:red'>" + d.frequency + "</span>";
-//  })
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>Frequency:</strong> <span style='color:red'>" + d.frequency + "</span>";
+  })
 
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -203,7 +201,7 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// svg.call(tip);
+svg.call(tip);
 
 
 x.domain(data.map(function(d) { return d.letter; }));
@@ -232,8 +230,8 @@ svg.selectAll(".bar")
     .attr("width", x.rangeBand())
     .attr("y", function(d) { return y(d.frequency); })
     .attr("height", function(d) { return height - y(d.frequency); })
-//    .on('mouseover', tip.show)
-//    .on('mouseout', tip.hide)
+    .on('mouseover', tip.show)
+    .on('mouseout', tip.hide)
 
 function type(d) {
   d.frequency = +d.frequency;

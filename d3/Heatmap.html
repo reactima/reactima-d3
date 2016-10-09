@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+  body {
+    font: 10px sans-serif;
+    shape-rendering: crispEdges;
+  }
+
+  .day {
+    fill: #fff;
+    stroke: #ccc;
+  }
+
+  .month {
+    fill: none;
+    stroke: #000;
+    stroke-width: 2px;
+  }
+
+  .RdYlGn .q0-11 {
+    fill: rgb(165, 0, 38)
+  }
+
+  .RdYlGn .q1-11 {
+    fill: rgb(215, 48, 39)
+  }
+
+  .RdYlGn .q2-11 {
+    fill: rgb(244, 109, 67)
+  }
+
+  .RdYlGn .q3-11 {
+    fill: rgb(253, 174, 97)
+  }
+
+  .RdYlGn .q4-11 {
+    fill: rgb(254, 224, 139)
+  }
+
+  .RdYlGn .q5-11 {
+    fill: rgb(255, 255, 191)
+  }
+
+  .RdYlGn .q6-11 {
+    fill: rgb(217, 239, 139)
+  }
+
+  .RdYlGn .q7-11 {
+    fill: rgb(166, 217, 106)
+  }
+
+  .RdYlGn .q8-11 {
+    fill: rgb(102, 189, 99)
+  }
+
+  .RdYlGn .q9-11 {
+    fill: rgb(26, 152, 80)
+  }
+
+  .RdYlGn .q10-11 {
+    fill: rgb(0, 104, 55)
+  }
+
+</style>
+<body>
+<script src="d3.js"></script>
+<script>
+  var csvData = [{
+    "Date": "2010-10-01",
+    "Open": "10789.72",
+    "High": "10907.41",
+    "Low": "10759.14",
+    "Close": "10829.68",
+    "Volume": "4298910000",
+    "Adj Close": "10829.68"
+  }, {
+    "Date": "2010-09-30",
+    "Open": "10835.96",
+    "High": "10960.99",
+    "Low": "10732.27",
+    "Close": "10788.05",
+    "Volume": "4284160000",
+    "Adj Close": "10788.05"
+  }, {
+    "Date": "2010-09-29",
+    "Open": "10857.98",
+    "High": "10901.96",
+    "Low": "10759.75",
+    "Close": "10835.28",
+    "Volume": "3990280000",
+    "Adj Close": "10835.28"
+  }, {
+    "Date": "2010-09-28",
+    "Open": "10809.85",
+    "High": "10905.44",
+    "Low": "10714.03",
+    "Close": "10858.14",
+    "Volume": "4025840000",
+    "Adj Close": "10858.14"
+  }, {
+    "Date": "2010-09-27",
+    "Open": "10860.03",
+    "High": "10902.52",
+    "Low": "10776.44",
+    "Close": "10812.04",
+    "Volume": "3587860000",
+    "Adj Close": "10812.04"
+  }, {
+    "Date": "2010-09-24",
+    "Open": "10664.39",
+    "High": "10897.83",
+    "Low": "10664.39",
+    "Close": "10860.26",
+    "Volume": "4123950000",
+    "Adj Close": "10860.26"
+  }, {
+    "Date": "2010-09-23",
+    "Open": "10738.48",
+    "High": "10779.65",
+    "Low": "10610.12",
+    "Close": "10662.42",
+    "Volume": "3847850000",
+    "Adj Close": "10662.42"
+  }, {
+    "Date": "2010-09-22",
+    "Open": "10761.11",
+    "High": "10829.75",
+    "Low": "10682.40",
+    "Close": "10739.31",
+    "Volume": "3911070000",
+    "Adj Close": "10739.31"
+  }, {
+    "Date": "2010-09-21",
+    "Open": "10753.39",
+    "High": "10844.89",
+    "Low": "10674.83",
+    "Close": "10761.03",
+    "Volume": "4175660000",
+    "Adj Close": "10761.03"
+  }, {
+    "Date": "2010-09-20",
+    "Open": "10608.08",
+    "High": "10783.51",
+    "Low": "10594.38",
+    "Close": "10753.62",
+    "Volume": "3364080000",
+    "Adj Close": "10753.62"
+  }, {
+    "Date": "2010-09-17",
+    "Open": "10595.44",
+    "High": "10689.29",
+    "Low": "10529.67",
+    "Close": "10607.85",
+    "Volume": "4086140000",
+    "Adj Close": "10607.85"
+  }, {
+    "Date": "2010-09-16",
+    "Open": "10571.75",
+    "High": "10624.58",
+    "Low": "10499.43",
+    "Close": "10594.83",
+    "Volume": "3364080000",
+    "Adj Close": "10594.83"
+  }, {
+    "Date": "2010-09-15",
+    "Open": "10526.42",
+    "High": "10609.21",
+    "Low": "10453.15",
+    "Close": "10572.73",
+    "Volume": "3369840000",
+    "Adj Close": "10572.73"
+  }, {
+    "Date": "2010-09-14",
+    "Open": "10544.81",
+    "High": "10622.69",
+    "Low": "10460.34",
+    "Close": "10526.49",
+    "Volume": "4521050000",
+    "Adj Close": "10526.49"
+  }, {
+    "Date": "2010-09-13",
+    "Open": "10458.60",
+    "High": "10605.73",
+    "Low": "10458.45",
+    "Close": "10544.13",
+    "Volume": "4521050000",
+    "Adj Close": "10544.13"
+  }, {
+    "Date": "2010-09-10",
+    "Open": "10415.01",
+    "High": "10502.80",
+    "Low": "10376.34",
+    "Close": "10462.77",
+    "Volume": "3061160000",
+    "Adj Close": "10462.77"
+  }, {
+    "Date": "2010-09-09",
+    "Open": "10388.22",
+    "High": "10515.86",
+    "Low": "10359.23",
+    "Close": "10415.24",
+    "Volume": "3387770000",
+    "Adj Close": "10415.24"
+  }, {
+    "Date": "2010-09-08",
+    "Open": "10338.57",
+    "High": "10460.50",
+    "Low": "10318.93",
+    "Close": "10387.01",
+    "Volume": "3224640000",
+    "Adj Close": "10387.01"
+  }, {
+    "Date": "2010-09-07",
+    "Open": "10446.80",
+    "High": "10448.99",
+    "Low": "10304.44",
+    "Close": "10340.69",
+    "Volume": "3107380000",
+    "Adj Close": "10340.69"
+  }, {
+    "Date": "2010-09-03",
+    "Open": "10321.92",
+    "High": "10484.71",
+    "Low": "10321.92",
+    "Close": "10447.93",
+    "Volume": "3534500000",
+    "Adj Close": "10447.93"
+  }, {
+    "Date": "2010-09-02",
+    "Open": "10270.08",
+    "High": "10350.98",
+    "Low": "10211.80",
+    "Close": "10320.10",
+    "Volume": "3704210000",
+    "Adj Close": "10320.10"
+  }, {
+    "Date": "2010-09-01",
+    "Open": "10016.01",
+    "High": "10305.87",
+    "Low": "10016.01",
+    "Close": "10269.47",
+    "Volume": "4396880000",
+    "Adj Close": "10269.47"
+  }, {
+    "Date": "2010-08-31",
+    "Open": "10006.42",
+    "High": "10101.53",
+    "Low": "9915.73",
+    "Close": "10014.72",
+    "Volume": "4038770000",
+    "Adj Close": "10014.72"
+  }, {
+    "Date": "2010-08-30",
+    "Open": "10145.58",
+    "High": "10170.10",
+    "Low": "10005.56",
+    "Close": "10009.73",
+    "Volume": "2917990000",
+    "Adj Close": "10009.73"
+  }, {
+    "Date": "2010-08-27",
+    "Open": "9982.40",
+    "High": "10176.30",
+    "Low": "9925.11",
+    "Close": "10150.65",
+    "Volume": "4102460000",
+    "Adj Close": "10150.65"
+  }, {
+    "Date": "2010-08-26",
+    "Open": "10059.83",
+    "High": "10138.12",
+    "Low": "9959.17",
+    "Close": "9985.81",
+    "Volume": "3646710000",
+    "Adj Close": "9985.81"
+  }, {
+    "Date": "2010-08-25",
+    "Open": "10040.15",
+    "High": "10104.18",
+    "Low": "9925.34",
+    "Close": "10060.06",
+    "Volume": "4360190000",
+    "Adj Close": "10060.06"
+  }, {
+    "Date": "2010-08-24",
+    "Open": "10170.86",
+    "High": "10170.86",
+    "Low": "9975.86",
+    "Close": "10040.45",
+    "Volume": "4436330000",
+    "Adj Close": "10040.45"
+  }, {
+    "Date": "2010-08-23",
+    "Open": "10215.51",
+    "High": "10328.88",
+    "Low": "10146.18",
+    "Close": "10174.41",
+    "Volume": "3210950000",
+    "Adj Close": "10174.41"
+  }, {
+    "Date": "2010-08-20",
+    "Open": "10270.98",
+    "High": "10276.13",
+    "Low": "10131.88",
+    "Close": "10213.62",
+    "Volume": "3761570000",
+    "Adj Close": "10213.62"
+  }, {
+    "Date": "2010-08-19",
+    "Open": "10411.15",
+    "High": "10412.29",
+    "Low": "10202.34",
+    "Close": "10271.21",
+    "Volume": "4290540000",
+    "Adj Close": "10271.21"
+  }, {
+    "Date": "2010-08-18",
+    "Open": "10398.59",
+    "High": "10486.38",
+    "Low": "10308.83",
+    "Close": "10415.54",
+    "Volume": "3724260000",
+    "Adj Close": "10415.54"
+  }, {
+    "Date": "2010-08-17",
+    "Open": "10297.55",
+    "High": "10501.67",
+    "Low": "10297.55",
+    "Close": "10405.85",
+    "Volume": "3968210000",
+    "Adj Close": "10405.85"
+  }, {
+    "Date": "2010-08-16",
+    "Open": "10303.07",
+    "High": "10354.39",
+    "Low": "10193.26",
+    "Close": "10302.01",
+    "Volume": "3142450000",
+    "Adj Close": "10302.01"
+  }, {
+    "Date": "2010-08-13",
+    "Open": "10320.33",
+    "High": "10381.86",
+    "Low": "10254.18",
+    "Close": "10303.15",
+    "Volume": "3328890000",
+    "Adj Close": "10303.15"
+  }, {
+    "Date": "2010-08-12",
+    "Open": "10361.58",
+    "High": "10388.37",
+    "Low": "10222.85",
+    "Close": "10319.95",
+    "Volume": "4521050000",
+    "Adj Close": "10319.95"
+  }, {
+    "Date": "2010-08-11",
+    "Open": "10631.82",
+    "High": "10631.82",
+    "Low": "10339.63",
+    "Close": "10378.83",
+    "Volume": "4511860000",
+    "Adj Close": "10378.83"
+  }, {
+    "Date": "2010-08-10",
+    "Open": "10696.63",
+    "High": "10717.21",
+    "Low": "10522.63",
+    "Close": "10644.25",
+    "Volume": "3979360000",
+    "Adj Close": "10644.25"
+  }, {
+    "Date": "2010-08-09",
+    "Open": "10654.62",
+    "High": "10755.66",
+    "Low": "10618.26",
+    "Close": "10698.75",
+    "Volume": "3191630000",
+    "Adj Close": "10698.75"
+  }, {
+    "Date": "2010-08-06",
+    "Open": "10668.55",
+    "High": "10688.08",
+    "Low": "10491.37",
+    "Close": "10653.56",
+    "Volume": "3857890000",
+    "Adj Close": "10653.56"
+  }, {
+    "Date": "2010-08-05",
+    "Open": "10679.67",
+    "High": "10712.37",
+    "Low": "10571.60",
+    "Close": "10674.98",
+    "Volume": "3685560000",
+    "Adj Close": "10674.98"
+  }, {
+    "Date": "2010-08-04",
+    "Open": "10630.20",
+    "High": "10738.48",
+    "Low": "10583.10",
+    "Close": "10680.43",
+    "Volume": "4057850000",
+    "Adj Close": "10680.43"
+  }]
+</script>
+<script>
+
+  var width = 960,
+      height = 36,
+      cellSize = 5; // cell size
+
+  var percent = d3.format(".1%"),
+      format = d3.time.format("%Y-%m-%d");
+
+  var color = d3.scale.quantize()
+      .domain([-.05, .05])
+      .range(d3.range(11).map(function (d) {
+        return "q" + d + "-11";
+      }));
+
+  var svg = d3.select("body").selectAll("svg")
+      .data(d3.range(1979, 2069))
+      .enter().append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("class", "RdYlGn")
+      .append("g")
+      .attr("transform", "translate(" + ((width - cellSize * 53) / 2) + "," + (height - cellSize * 7 - 1) + ")");
+
+  svg.append("text")
+      .attr("transform", "translate(-6," + cellSize * 3.5 + ")rotate(-90)")
+      .style("text-anchor", "middle")
+      .text(function (d) {
+        return d;
+      });
+
+  var rect = svg.selectAll(".day")
+      .data(function (d) {
+        return d3.time.days(new Date(d, 0, 1), new Date(d + 1, 0, 1));
+      })
+      .enter().append("rect")
+      .attr("class", "day")
+      .attr("width", cellSize)
+      .attr("height", cellSize)
+      .attr("x", function (d) {
+        return d3.time.weekOfYear(d) * cellSize;
+      })
+      .attr("y", function (d) {
+        return d.getDay() * cellSize;
+      })
+      .datum(format);
+
+  rect.append("title")
+      .text(function (d) {
+        return d;
+      });
+
+  svg.selectAll(".month")
+      .data(function (d) {
+        return d3.time.months(new Date(d, 0, 1), new Date(d + 1, 0, 1));
+      })
+      .enter().append("path")
+      .attr("class", "month")
+      .attr("d", monthPath);
+
+  var data = d3.nest()
+      .key(function (d) {
+        return d.Date;
+      })
+      .rollup(function (d) {
+        return (d[0].Close - d[0].Open) / d[0].Open;
+      })
+      .map(csvData);
+
+  rect.filter(function (d) {
+    return d in data;
+  })
+      .attr("class", function (d) {
+        return "day " + color(data[d]);
+      })
+      .select("title")
+      .text(function (d) {
+        return d + ": " + percent(data[d]);
+      });
+
+
+  function monthPath(t0) {
+    var t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
+        d0 = t0.getDay(), w0 = d3.time.weekOfYear(t0),
+        d1 = t1.getDay(), w1 = d3.time.weekOfYear(t1);
+    return "M" + (w0 + 1) * cellSize + "," + d0 * cellSize
+        + "H" + w0 * cellSize + "V" + 7 * cellSize
+        + "H" + w1 * cellSize + "V" + (d1 + 1) * cellSize
+        + "H" + (w1 + 1) * cellSize + "V" + 0
+        + "H" + (w0 + 1) * cellSize + "Z";
+  }
+
+</script>
