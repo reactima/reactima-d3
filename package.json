@@ -1,0 +1,29 @@
+{
+  "name": "reactima-uikit",
+  "version": "1.0.0",
+  "description": "An enterprise-class React-based UI Kit",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server d3 -p 80"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reactima/reactima-uikit.git"
+  },
+  "author": "Ilya Sidorov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reactima/reactima-uikit/issues"
+  },
+  "homepage": "https://github.com/reactima/reactima-uikit#readme",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "UI",
+    "kit"
+  ],
+  "dependencies": {
+    "http-server": "^0.9.0"
+  }
+}
