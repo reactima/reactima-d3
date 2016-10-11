@@ -2,4 +2,3 @@ AuthUserFile /app/www/.htpasswd
 AuthType Basic
 AuthName "Restricted Access"
 Require valid-user
-adeptima:$apr1$sfIzQ51t$n6E3JzsMr73an23d3xsCx/
